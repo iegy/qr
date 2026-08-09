@@ -3,7 +3,7 @@
 مولّد أكواد QR احترافي، مجاني بالكامل، ويعمل بالكامل داخل المتصفح — من غير سيرفر ومن غير تسجيل.
 
 **تجربة مباشرة:** بعد رفع المشروع على GitHub Pages هيبقى متاح على
-`https://<username>.github.io/qrmo/`
+`https://iegy.net/qr`
 
 ## المميزات
 
@@ -33,13 +33,7 @@ qrmo/
 ```
 
 ## التقنيات المستخدمة
-
+- mohammed hussein iegy.net
 - HTML / CSS / JavaScript عادي (بدون أي إطار عمل أو خطوة بناء)
 - [qr-code-styling](https://github.com/kozakdenys/qr-code-styling) لتوليد وتخصيص أكواد QR
 - [JSZip](https://stuk.github.io/jszip/) لتجميع أكواد التوليد بالجملة في ملف ZIP
-
-## النشر على GitHub Pages
-
-1. ارفع كل الملفات في مستودع باسم `qrmo`.
-2. من إعدادات المستودع (Settings → Pages) اختار الفرع `main` والمجلد `/root`.
-3. الموقع هيبقى متاح على `https://<username>.github.io/qrmo/` خلال دقايق.
