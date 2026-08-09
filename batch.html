@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>توليد بالجملة — qrmo</title>
+<meta name="description" content="ارفع ملف أو الصق قايمة، واحصل على مئات أكواد الـQR دفعة واحدة، جاهزين كملف ZIP أو شيت للطباعة.">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2.4"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg></span>
+      qrmo <small class="mono">QR TOOLKIT</small>
+    </a>
+    <ul class="nav-links">
+      <li><a href="generator.html">المولّد</a></li>
+      <li><a href="batch.html" class="active">توليد بالجملة</a></li>
+      <li><a href="about.html">عن qrmo</a></li>
+    </ul>
+    <a href="generator.html" class="nav-cta" style="display:inline-flex">المولّد الفردي</a>
+    <button class="nav-toggle" aria-label="فتح القائمة" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="container tools-header">
+  <h1>توليد بالجملة</h1>
+  <p>ارفع ملف نصّي (.txt أو .csv) أو الصق قايمتك، سطر لكل كود. تقدر تكتب <code class="mono">تسمية, القيمة</code> في نفس السطر عشان تسمّي كل كود.</p>
+</div>
+
+<div class="container" style="padding-bottom:80px;">
+  <div class="tool-grid" style="grid-template-columns:1fr;">
+
+    <div class="panel">
+      <h3>المصدر</h3>
+      <div class="dropzone" id="dropzone">
+        <strong>اسحب ملف هنا</strong> أو دوس للاختيار (.txt / .csv)
+        <input type="file" id="fileInput" accept=".txt,.csv" hidden>
+      </div>
+      <div class="field" style="margin-top:18px;">
+        <label for="pasteArea">أو الصق القايمة هنا</label>
+        <textarea id="pasteArea" rows="6" placeholder="https://example.com/1&#10;منتج ٢, https://example.com/2&#10;https://example.com/3"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="batchType">نوع القيم</label>
+          <select id="batchType">
+            <option value="auto">تلقائي (روابط أو نص)</option>
+            <option value="tel">أرقام تليفونات</option>
+            <option value="mailto">إيميلات</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>لون الكود</label>
+          <div class="swatch-row"><input type="color" id="batchFg" value="#17171f"><span class="swatch-val mono" id="batchFgVal">#17171f</span></div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="previewBtn" type="button">معاينة القايمة</button>
+    </div>
+
+    <div class="panel" id="resultsPanel" hidden>
+      <h3>المعاينة (<span id="rowCount">0</span> عنصر)</h3>
+      <div class="batch-table-wrap">
+        <table class="batch-table">
+          <thead><tr><th>التسمية</th><th>القيمة</th></tr></thead>
+          <tbody id="rowsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="hero-actions" style="margin-top:20px;">
+        <button class="btn btn-primary" id="generateBtn" type="button">ولّد كل الأكواد</button>
+      </div>
+
+      <div class="batch-grid" id="batchGrid"></div>
+
+      <div class="hero-actions" id="exportActions" style="margin-top:22px;" hidden>
+        <button class="btn btn-ghost-dark" id="downloadZip" type="button">تحميل الكل (ZIP)</button>
+        <button class="btn btn-ghost-dark" id="printSheetBtn" type="button">طباعة كشيت</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="printSheet"><div class="print-grid" id="printGrid"></div></div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© <span data-year></span> qrmo</span>
+      <span>صُنع بواسطة <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--paper-50)">iegy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="assets/js/qr-core.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/batch.js"></script>
+</body>
+</html>
