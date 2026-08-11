@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iegy.net/qr/sitemap.xml

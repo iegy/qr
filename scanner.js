@@ -19,58 +19,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const historyWrap = document.getElementById('historyWrap');
   const historyList = document.getElementById('historyList');
+  const exportHistoryBtn = document.getElementById('exportHistoryBtn');
+  const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 
-  let stream = null, rafId = null, lastText = null, lastAt = 0;
-  const history = [];
+  const HISTORY_KEY = 'qrmo-scan-history';
+  const HISTORY_MAX = 25;
 
-  /* ---- interpret decoded text into a friendly summary ---- */
+  let stream = null, rafId = null, lastText = null, lastAt = 0, lastShownText = null;
+
+  function loadHistory(){
+    try{ return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveHistory(items){
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(items.slice(0, HISTORY_MAX)));
+  }
+  let history = loadHistory();
+
+  /* ---- interpret decoded text into a friendly summary (labels are re-read
+     live from the i18n dictionary, so a language switch updates them too) ---- */
   function interpret(text){
+    const t = QRMO_I18N.t;
     if (/^https?:\/\//i.test(text)){
-      return { badge: 'رابط', fields: {}, actions: [{ label: 'افتح الرابط', href: text }] };
+      return { badge: t('scan.badge.link'), fields: {}, actions: [{ label: t('scan.action.openLink'), href: text }] };
     }
     if (/^WIFI:/i.test(text)){
       const get = (k) => (text.match(new RegExp(k + ':((?:[^\\\\;]|\\\\.)*)')) || [])[1];
       const clean = (v) => (v || '').replace(/\\(.)/g, '$1');
-      return { badge: 'شبكة واي فاي', fields: {
-        'اسم الشبكة': clean(get('S')) || '—',
-        'كلمة السر': clean(get('P')) || '—',
-        'التشفير': clean(get('T')) || '—'
+      return { badge: t('scan.badge.wifi'), fields: {
+        [t('scan.field.ssid')]: clean(get('S')) || t('scan.na'),
+        [t('scan.field.pass')]: clean(get('P')) || t('scan.na'),
+        [t('scan.field.enc')]: clean(get('T')) || t('scan.na')
       }, actions: [] };
     }
     if (/^BEGIN:VCARD/i.test(text)){
       const line = (k) => (text.match(new RegExp('^' + k + '[^:]*:(.*)$', 'im')) || [])[1] || '';
-      return { badge: 'جهة اتصال', fields: {
-        'الاسم': line('FN') || '—',
-        'التليفون': line('TEL') || '—',
-        'الإيميل': line('EMAIL') || '—',
-        'الشركة': line('ORG') || '—'
+      return { badge: t('scan.badge.vcard'), fields: {
+        [t('scan.field.name')]: line('FN') || t('scan.na'),
+        [t('scan.field.tel')]: line('TEL') || t('scan.na'),
+        [t('scan.field.email')]: line('EMAIL') || t('scan.na'),
+        [t('scan.field.org')]: line('ORG') || t('scan.na')
       }, actions: [] };
     }
     if (/^mailto:/i.test(text)){
       const addr = text.replace(/^mailto:/i, '').split('?')[0];
-      return { badge: 'إيميل', fields: { 'العنوان': addr || '—' }, actions: [{ label: 'ابعت إيميل', href: text }] };
+      return { badge: t('scan.badge.email'), fields: { [t('scan.field.email')]: addr || t('scan.na') }, actions: [{ label: t('scan.action.sendEmail'), href: text }] };
     }
     if (/^tel:/i.test(text)){
       const num = text.replace(/^tel:/i, '');
-      return { badge: 'رقم تليفون', fields: { 'الرقم': num }, actions: [{ label: 'اتصل', href: text }] };
+      return { badge: t('scan.badge.tel'), fields: { [t('scan.field.tel')]: num }, actions: [{ label: t('scan.action.call'), href: text }] };
     }
     if (/^SMSTO:/i.test(text)){
       const [, num, msg] = text.match(/^SMSTO:([^:]*):?(.*)$/i) || [];
-      return { badge: 'رسالة SMS', fields: { 'الرقم': num || '—', 'الرسالة': msg || '—' }, actions: [] };
+      return { badge: t('scan.badge.sms'), fields: { [t('scan.field.smsNum')]: num || t('scan.na'), [t('scan.field.smsMsg')]: msg || t('scan.na') }, actions: [] };
     }
     if (/^geo:/i.test(text)){
       const coords = text.replace(/^geo:/i, '');
-      return { badge: 'موقع جغرافي', fields: { 'الإحداثيات': coords }, actions: [{ label: 'افتح في خرائط جوجل', href: `https://maps.google.com/?q=${coords}` }] };
+      return { badge: t('scan.badge.geo'), fields: { [t('scan.field.coords')]: coords }, actions: [{ label: t('scan.action.openMaps'), href: `https://maps.google.com/?q=${coords}` }] };
     }
-    return { badge: 'نص', fields: {}, actions: [] };
+    return { badge: t('scan.badge.text'), fields: {}, actions: [] };
   }
 
-  function showResult(text){
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  }
+
+  /* Renders the result panel for `text` without touching history — used both
+     for a fresh scan and to re-render after a language switch. */
+  function displayResult(text){
+    lastShownText = text;
     const info = interpret(text);
     resultType.textContent = info.badge;
     resultFields.innerHTML = '';
     Object.entries(info.fields).forEach(([k, v]) => {
-      resultFields.innerHTML += `<dt>${k}</dt><dd>${escapeHtml(v)}</dd>`;
+      resultFields.innerHTML += `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd>`;
     });
     resultRaw.textContent = text;
     resultActions.innerHTML = '';
@@ -81,15 +103,20 @@ document.addEventListener('DOMContentLoaded', () => {
       resultActions.appendChild(link);
     });
     const copyBtn = document.createElement('button');
-    copyBtn.className = 'btn btn-ghost-dark'; copyBtn.type = 'button'; copyBtn.textContent = 'نسخ النص';
+    copyBtn.className = 'btn btn-ghost-dark'; copyBtn.type = 'button'; copyBtn.textContent = QRMO_I18N.t('scan.copy');
     copyBtn.addEventListener('click', () => {
-      navigator.clipboard?.writeText(text).then(() => { copyBtn.textContent = 'اتنسخ ✓'; setTimeout(() => copyBtn.textContent = 'نسخ النص', 1500); });
+      navigator.clipboard?.writeText(text).then(() => { copyBtn.textContent = QRMO_I18N.t('scan.copied'); setTimeout(() => copyBtn.textContent = QRMO_I18N.t('scan.copy'), 1500); });
     });
     resultActions.appendChild(copyBtn);
     resultBox.hidden = false;
+  }
 
+  function showResult(text){
+    displayResult(text);
+    const info = interpret(text);
     history.unshift({ text, badge: info.badge, at: Date.now() });
-    if (history.length > 8) history.pop();
+    if (history.length > HISTORY_MAX) history.length = HISTORY_MAX;
+    saveHistory(history);
     renderHistory();
   }
 
@@ -98,22 +125,42 @@ document.addEventListener('DOMContentLoaded', () => {
     historyList.innerHTML = '';
     history.forEach(item => {
       const li = document.createElement('li');
-      li.innerHTML = `<span>${item.badge}</span><span class="mono">${escapeHtml(item.text)}</span>`;
-      li.addEventListener('click', () => showResult(item.text));
+      li.innerHTML = `<span>${escapeHtml(interpret(item.text).badge)}</span><span class="mono">${escapeHtml(item.text)}</span>`;
+      li.addEventListener('click', () => displayResult(item.text));
       historyList.appendChild(li);
     });
   }
 
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-  }
+  exportHistoryBtn.addEventListener('click', () => {
+    if (!history.length) return;
+    const rows = [['type', 'text', 'scanned_at']];
+    history.forEach(item => rows.push([interpret(item.text).badge, item.text, new Date(item.at).toISOString()]));
+    const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'qrmo-scan-history.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  clearHistoryBtn.addEventListener('click', () => {
+    history = [];
+    saveHistory(history);
+    renderHistory();
+  });
+
+  document.addEventListener('qrmo:langchange', () => {
+    renderHistory();
+    if (!resultBox.hidden && lastShownText !== null) displayResult(lastShownText);
+  });
 
   /* ---- camera loop ---- */
   async function startCamera(){
     try{
       stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
     }catch(err){
-      camHint.textContent = 'معرفناش نوصل للكاميرا. تأكد إنك سمحت بالإذن، أو جرّب رفع صورة بدل ذلك.';
+      camHint.textContent = QRMO_I18N.t('scan.err.camera');
       return;
     }
     video.srcObject = stream;
@@ -167,10 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (code && code.data){
         showResult(code.data);
       }else{
-        camHint.textContent = 'معرفناش نلاقي كود QR واضح في الصورة دي.';
+        camHint.textContent = QRMO_I18N.t('scan.err.noCode');
       }
       URL.revokeObjectURL(img.src);
     };
     img.src = URL.createObjectURL(file);
   });
+
+  renderHistory();
 });

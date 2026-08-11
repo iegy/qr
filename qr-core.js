@@ -70,17 +70,38 @@ const QRMO = (() => {
 
   /* ---- qr-code-styling wrapper ---- */
 
+  /* dots/corners take either a flat `color` or a `gradient` object — never
+     both — so this picks exactly one shape based on whether a gradient is
+     turned on, and every section (dots, corner border, corner center)
+     reuses it for one cohesive look. */
+  function fillShape(opts){
+    if (opts.gradient && opts.gradient.enabled){
+      return {
+        gradient: {
+          type: opts.gradient.type === 'radial' ? 'radial' : 'linear',
+          rotation: opts.gradient.type === 'radial' ? 0 : (Number(opts.gradient.rotation) || 0),
+          colorStops: [
+            { offset: 0, color: opts.fg || '#17171f' },
+            { offset: 1, color: opts.gradient.color2 || '#3a4eff' }
+          ]
+        }
+      };
+    }
+    return { color: opts.fg || '#17171f' };
+  }
+
   function qrOptionShape(opts){
+    const fill = fillShape(opts);
     return {
       width: opts.size || 300,
       height: opts.size || 300,
       data: opts.data || ' ',
       margin: 10,
       qrOptions: { errorCorrectionLevel: opts.ecLevel || 'M' },
-      dotsOptions: { color: opts.fg || '#17171f', type: opts.dotStyle || 'square' },
-      cornersSquareOptions: { color: opts.fg || '#17171f', type: opts.cornerStyle || 'square' },
-      cornersDotOptions: { color: opts.fg || '#17171f' },
-      backgroundOptions: { color: opts.bg || '#ffffff' },
+      dotsOptions: { type: opts.dotStyle || 'square', ...fill },
+      cornersSquareOptions: { type: opts.cornerStyle || 'square', ...fill },
+      cornersDotOptions: { type: opts.cornerDotStyle || 'square', ...fill },
+      backgroundOptions: { color: opts.transparent ? 'rgba(0,0,0,0)' : (opts.bg || '#ffffff') },
       image: opts.logo || undefined,
       imageOptions: { crossOrigin: 'anonymous', margin: 6, imageSize: 0.4 }
     };
@@ -105,6 +126,38 @@ const QRMO = (() => {
     svgQr.download({ name: name || 'qrmo', extension: 'svg' });
   }
 
+  /* ---- readability checks: contrast math + an actual decode round-trip ---- */
+
+  function hexToRgb(hex){
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '');
+    if (!m) return { r: 0, g: 0, b: 0 };
+    return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) };
+  }
+  function relLuminance({ r, g, b }){
+    const chan = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * chan(r) + 0.7152 * chan(g) + 0.0722 * chan(b);
+  }
+  function contrastRatio(hex1, hex2){
+    const L1 = relLuminance(hexToRgb(hex1));
+    const L2 = relLuminance(hexToRgb(hex2));
+    const lighter = Math.max(L1, L2), darker = Math.min(L1, L2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  /* Decodes the actually-rendered canvas with jsQR and checks it round-trips
+     back to the exact payload — catches real-world failures (logo too big,
+     error correction too low) that a contrast check alone would miss.
+     Returns null (skip) if jsQR isn't loaded on this page. */
+  function verifyReadable(canvas, expectedData){
+    if (typeof jsQR !== 'function' || !canvas) return null;
+    try{
+      const ctx = canvas.getContext('2d');
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imgData.data, imgData.width, imgData.height);
+      return !!(code && code.data === expectedData);
+    }catch(e){ return null; }
+  }
+
   function readFileAsDataURL(file){
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -114,5 +167,5 @@ const QRMO = (() => {
     });
   }
 
-  return { buildPayload, createQR, updateQR, download, downloadAsSvg, readFileAsDataURL };
+  return { buildPayload, createQR, updateQR, download, downloadAsSvg, readFileAsDataURL, contrastRatio, verifyReadable };
 })();

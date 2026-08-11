@@ -35,16 +35,42 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsText(file);
   }
 
-  function parseRows(raw){
-    return raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map((line, i) => {
-      const commaIdx = line.indexOf(',');
-      if (commaIdx > -1){
-        const label = line.slice(0, commaIdx).trim();
-        const value = line.slice(commaIdx + 1).trim();
-        if (label && value) return { label, value };
+  /* Proper CSV tokenizer (RFC 4180-ish): handles quoted fields, commas and
+     newlines inside quotes, and "" as an escaped quote. A plain list with no
+     quoting still works exactly like a naive split would, so old input keeps
+     behaving the same — this only fixes the case a naive split gets wrong. */
+  function parseCSV(text){
+    const rows = [];
+    let row = [], field = '', inQuotes = false, i = 0;
+    while (i < text.length){
+      const ch = text[i];
+      if (inQuotes){
+        if (ch === '"'){
+          if (text[i + 1] === '"'){ field += '"'; i += 2; continue; }
+          inQuotes = false; i++; continue;
+        }
+        field += ch; i++; continue;
       }
-      return { label: `qr-${i + 1}`, value: line };
-    });
+      if (ch === '"'){ inQuotes = true; i++; continue; }
+      if (ch === ','){ row.push(field); field = ''; i++; continue; }
+      if (ch === '\r'){ i++; continue; }
+      if (ch === '\n'){ row.push(field); rows.push(row); row = []; field = ''; i++; continue; }
+      field += ch; i++;
+    }
+    if (field.length || row.length){ row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  function parseRows(raw){
+    return parseCSV(raw)
+      .map(cols => cols.map(c => c.trim()))
+      .filter(cols => cols.some(Boolean))
+      .map((cols, i) => {
+        if (cols.length > 1 && cols[0] && cols.slice(1).join(',')){
+          return { label: cols[0], value: cols.slice(1).join(',') };
+        }
+        return { label: `qr-${i + 1}`, value: cols.join(',') };
+      });
   }
 
   function buildBatchPayload(value){
@@ -86,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     batchGrid.innerHTML = '';
     generated = [];
     generateBtn.disabled = true;
-    generateBtn.textContent = 'بيتولّد...';
+    generateBtn.textContent = QRMO_I18N.t('batch.generating');
 
     for (const row of rows){
       const thumb = document.createElement('div');
@@ -112,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     generateBtn.disabled = false;
-    generateBtn.textContent = 'ولّد كل الأكواد';
+    generateBtn.textContent = QRMO_I18N.t('batch.generateBtn');
     exportActions.hidden = generated.length === 0;
   });
 

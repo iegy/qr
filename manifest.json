@@ -1,0 +1,19 @@
+{
+  "name": "qrmo — مولّد أكواد QR احترافي",
+  "short_name": "qrmo",
+  "description": "مولّد أكواد QR احترافي، مجاني بالكامل، ويعمل بالكامل داخل المتصفح — من غير سيرفر ومن غير تسجيل.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#111219",
+  "theme_color": "#111219",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -4,20 +4,79 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.nav-toggle');
   const links = document.querySelector('.nav-links');
   if (toggle && links){
+    /* `.site-nav` is `position:sticky`, which makes it a containing block for
+       any `position:fixed` descendant — so on mobile the fixed full-screen
+       menu panel was sizing itself against the ~68px-tall nav bar instead of
+       the viewport (collapsing to a sliver with no real backdrop, links
+       spilling over the page beneath it). Fix: physically move the panel to
+       be a direct child of <body> while in mobile layout, so `position:fixed`
+       resolves against the real viewport, then move it back for desktop so
+       it stays inline in the nav bar's flex row. */
+    const homeParent = links.parentElement;
+    const homeNextSibling = links.nextElementSibling;
+    const mq = window.matchMedia('(max-width:820px)');
+
+    function closeMenu(){
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+
+    function placeLinks(isMobile){
+      closeMenu();
+      if (isMobile){
+        if (links.parentElement !== document.body) document.body.appendChild(links);
+      } else if (links.parentElement !== homeParent){
+        homeParent.insertBefore(links, homeNextSibling);
+      }
+    }
+    placeLinks(mq.matches);
+    mq.addEventListener('change', (e) => placeLinks(e.matches));
+
     toggle.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.classList.toggle('menu-open', open);
     });
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 820 && links.classList.contains('open')){
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && links.classList.contains('open')) closeMenu();
     });
   }
 
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
+
+  /* ---- light/dark theme toggle (persisted; applied early inline in <head>
+     too, so there's no flash of the wrong theme on repeat visits) ---- */
+  const THEME_KEY = 'qrmo-theme';
+  const themeBtn = document.getElementById('themeToggle');
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+  function applyThemeColorMeta(){
+    if (!themeColorMeta) return;
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+    if (bg) themeColorMeta.setAttribute('content', bg);
+  }
+  applyThemeColorMeta();
+  if (themeBtn){
+    themeBtn.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight){
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem(THEME_KEY, 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem(THEME_KEY, 'light');
+      }
+      applyThemeColorMeta();
+    });
+  }
+
+  /* ---- PWA: register service worker (offline + installable) ---- */
+  if ('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => { /* offline support is a bonus, not required */ });
+    });
+  }
 
   const revealEls = document.querySelectorAll('.reveal');
   if (revealEls.length && 'IntersectionObserver' in window){

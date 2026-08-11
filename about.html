@@ -2,10 +2,29 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{var l=localStorage.getItem('qrmo-lang')||'ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('qrmo-theme');if(th==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>عن qrmo</title>
 <meta name="description" content="qrmo أداة مجانية لعمل أكواد QR احترافية، بتشتغل بالكامل جوه متصفحك من غير ما ترسل أي بيانات لسيرفر.">
+<link rel="canonical" href="https://iegy.net/qr/about.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="qrmo">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="عن qrmo">
+<meta property="og:description" content="qrmo أداة مجانية لعمل أكواد QR احترافية، بتشتغل بالكامل جوه متصفحك من غير ما ترسل أي بيانات لسيرفر.">
+<meta property="og:url" content="https://iegy.net/qr/about.html">
+<meta property="og:image" content="https://iegy.net/qr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="عن qrmo">
+<meta name="twitter:description" content="qrmo أداة مجانية لعمل أكواد QR احترافية، بتشتغل بالكامل جوه متصفحك.">
+<meta name="twitter:image" content="https://iegy.net/qr/og-image.png">
+<meta name="theme-color" content="#111219">
+<link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,45 +33,47 @@
   <div class="container">
     <a href="index.html" class="brand">
       <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2.4"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg></span>
-      qrmo <small class="mono">QR TOOLKIT</small>
+      qrmo <small class="mono" data-i18n="nav.tag">QR TOOLKIT</small>
     </a>
     <ul class="nav-links">
-      <li><a href="generator.html">المولّد</a></li>
-      <li><a href="batch.html">توليد بالجملة</a></li>
-      <li><a href="scanner.html">القارئ</a></li>
-      <li><a href="about.html" class="active">عن qrmo</a></li>
+      <li><a href="generator.html" data-i18n="nav.generator">المولّد</a></li>
+      <li><a href="batch.html" data-i18n="nav.batch">توليد بالجملة</a></li>
+      <li><a href="scanner.html" data-i18n="nav.scanner">القارئ</a></li>
+      <li><a href="about.html" class="active" data-i18n="nav.about">عن qrmo</a></li>
     </ul>
-    <a href="generator.html" class="nav-cta" style="display:inline-flex">ابدأ الآن</a>
-    <button class="nav-toggle" aria-label="فتح القائمة" aria-expanded="false">
+    <a href="generator.html" class="nav-cta" style="display:inline-flex" data-i18n="nav.cta.start">ابدأ الآن</a>
+    <button class="lang-toggle" id="langToggle" type="button" data-i18n="nav.lang.toggle">English</button>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" data-i18n-aria-label="nav.theme.toggle"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 119.5 4a7 7 0 1010.5 10.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+    <button class="nav-toggle" aria-label="فتح القائمة" data-i18n-aria-label="nav.toggle.aria" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
 <div class="container about-hero">
-  <h1>عن qrmo</h1>
-  <p>qrmo أداة مجانية بالكامل لعمل أكواد QR احترافية ومخصّصة، من غير ما تحتاج تسجّل حساب أو تدفع اشتراك.</p>
+  <h1 data-i18n="about.h1">عن qrmo</h1>
+  <p data-i18n="about.lead">qrmo أداة مجانية بالكامل لعمل أكواد QR احترافية ومخصّصة، من غير ما تحتاج تسجّل حساب أو تدفع اشتراك.</p>
 </div>
 
 <div class="container" style="padding-bottom:70px;">
   <div class="about-block reveal">
-    <h2>خصوصية أولًا</h2>
-    <p>كل كود QR بيتولّد ببرمجة تعمل جوه متصفحك مباشرة — مفيش أي لينك أو نص أو بيانات بتتبعت لأي سيرفر ولا بتتخزّن في أي مكان. لما تقفل الصفحة، البيانات بتروح معاها.</p>
+    <h2 data-i18n="about.privacy.h2">خصوصية أولًا</h2>
+    <p data-i18n="about.privacy.p">كل كود QR بيتولّد ببرمجة تعمل جوه متصفحك مباشرة — مفيش أي لينك أو نص أو بيانات بتتبعت لأي سيرفر ولا بتتخزّن في أي مكان. لما تقفل الصفحة، البيانات بتروح معاها.</p>
   </div>
 
   <div class="about-block reveal">
-    <h2>مبنية بتقنيات مفتوحة</h2>
-    <p>الموقع مبني بـ HTML وCSS وJavaScript عادي من غير أي إطار عمل تقيل، وبيستخدم مكتبة <span class="mono">qr-code-styling</span> مفتوحة المصدر لتوليد الأكواد وتخصيصها.</p>
+    <h2 data-i18n="about.tech.h2">مبنية بتقنيات مفتوحة</h2>
+    <p><span data-i18n="about.tech.p1">الموقع مبني بـ HTML وCSS وJavaScript عادي من غير أي إطار عمل تقيل، وبيستخدم مكتبة</span> <span class="mono">qr-code-styling</span> <span data-i18n="about.tech.p2">مفتوحة المصدر لتوليد الأكواد وتخصيصها.</span></p>
   </div>
 
   <div class="about-block reveal">
-    <h2>مين اللي بناها</h2>
-    <p>qrmo من تطوير <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--ultra-600)">Mohammed Hussein (iegy)</a>، مطوّر ومصمم تجارب رقمية، وله أدوات وأنظمة تانية زي NewShop وEgyUp Cloud.</p>
+    <h2 data-i18n="about.who.h2">مين اللي بناها</h2>
+    <p><span data-i18n="about.who.p1">qrmo من تطوير</span> <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--ultra-600)">Mohammed Hussein (iegy)</a><span data-i18n="about.who.p2">، مطوّر ومصمم تجارب رقمية، وله أدوات وأنظمة تانية زي NewShop وEgyUp Cloud.</span></p>
   </div>
 
   <div class="about-block reveal">
-    <h2>تواصل</h2>
-    <p>تقدر تتابع الشغل أو تتواصل من خلال:</p>
+    <h2 data-i18n="about.contact.h2">تواصل</h2>
+    <p data-i18n="about.contact.p">تقدر تتابع الشغل أو تتواصل من خلال:</p>
     <div class="footer-links" style="margin-top:14px;">
       <a href="https://iegy.net" target="_blank" rel="noopener">iegy.net</a>
       <a href="https://github.com/iegy/qrmo" target="_blank" rel="noopener">GitHub</a>
@@ -66,11 +87,12 @@
   <div class="container">
     <div class="footer-bottom">
       <span>© <span data-year></span> qrmo</span>
-      <span>صُنع بواسطة <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--paper-50)">iegy</a></span>
+      <span><span data-i18n="footer.made">صُنع بواسطة</span> <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--paper-50)">iegy</a></span>
     </div>
   </div>
 </footer>
 
+<script src="i18n.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

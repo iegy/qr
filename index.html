@@ -2,11 +2,50 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{var l=localStorage.getItem('qrmo-lang')||'ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('qrmo-theme');if(th==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>qrmo — مولّد أكواد QR احترافي مجانًا</title>
 <meta name="description" content="اصنع أكواد QR احترافية للينكات، الواي فاي، جهات الاتصال، والمزيد، خصّصها بألوانك ولوجوك، ونزّلها فورًا. كل المعالجة داخل متصفحك بدون تسجيل.">
+<link rel="canonical" href="https://iegy.net/qr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="qrmo">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="qrmo — مولّد أكواد QR احترافي مجانًا">
+<meta property="og:description" content="اصنع أكواد QR احترافية للينكات، الواي فاي، جهات الاتصال، والمزيد، خصّصها بألوانك ولوجوك، ونزّلها فورًا. كل المعالجة داخل متصفحك بدون تسجيل.">
+<meta property="og:url" content="https://iegy.net/qr/">
+<meta property="og:image" content="https://iegy.net/qr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="qrmo — مولّد أكواد QR احترافي مجانًا">
+<meta name="twitter:description" content="اصنع أكواد QR احترافية للينكات، الواي فاي، جهات الاتصال، والمزيد — كله من غير سيرفر.">
+<meta name="twitter:image" content="https://iegy.net/qr/og-image.png">
+<meta name="theme-color" content="#111219">
+<link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "qrmo",
+  "url": "https://iegy.net/qr/",
+  "description": "مولّد أكواد QR احترافي، مجاني بالكامل، ويعمل بالكامل داخل المتصفح — من غير سيرفر ومن غير تسجيل.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "inLanguage": ["ar", "en"],
+  "featureList": [
+    "توليد أكواد QR للينكات، النصوص، الواي فاي، جهات الاتصال، الإيميل، التليفون، SMS، والمواقع الجغرافية",
+    "تخصيص الألوان، شكل النقط والزوايا، ولوجو داخل الكود",
+    "توليد بالجملة من ملف أو قائمة",
+    "قارئ أكواد QR من الكاميرا أو صورة",
+    "يعمل بالكامل من غير سيرفر"
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -14,16 +53,18 @@
   <div class="container">
     <a href="index.html" class="brand">
       <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2.4"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg></span>
-      qrmo <small class="mono">QR TOOLKIT</small>
+      qrmo <small class="mono" data-i18n="nav.tag">QR TOOLKIT</small>
     </a>
     <ul class="nav-links">
-      <li><a href="generator.html">المولّد</a></li>
-      <li><a href="batch.html">توليد بالجملة</a></li>
-      <li><a href="scanner.html">القارئ</a></li>
-      <li><a href="about.html">عن qrmo</a></li>
+      <li><a href="generator.html" data-i18n="nav.generator">المولّد</a></li>
+      <li><a href="batch.html" data-i18n="nav.batch">توليد بالجملة</a></li>
+      <li><a href="scanner.html" data-i18n="nav.scanner">القارئ</a></li>
+      <li><a href="about.html" data-i18n="nav.about">عن qrmo</a></li>
     </ul>
-    <a href="generator.html" class="nav-cta" style="display:inline-flex">ابدأ الآن</a>
-    <button class="nav-toggle" aria-label="فتح القائمة" aria-expanded="false">
+    <a href="generator.html" class="nav-cta" style="display:inline-flex" data-i18n="nav.cta.start">ابدأ الآن</a>
+    <button class="lang-toggle" id="langToggle" type="button" data-i18n="nav.lang.toggle">English</button>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" data-i18n-aria-label="nav.theme.toggle"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 119.5 4a7 7 0 1010.5 10.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+    <button class="nav-toggle" aria-label="فتح القائمة" data-i18n-aria-label="nav.toggle.aria" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -32,27 +73,27 @@
 <header class="hero">
   <div class="container hero-grid">
     <div>
-      <span class="eyebrow"><i></i> كل المعالجة تتم داخل متصفحك — بدون سيرفر</span>
-      <h1>حوّل أي لينك أو نص<br>لكود QR <span>جاهز للطباعة</span></h1>
-      <p class="hero-sub">qrmo أداة مجانية بالكامل لعمل أكواد QR احترافية: واي فاي، جهات اتصال، مواقع، وحتى توليد بالجملة لمئات الأكواد دفعة واحدة.</p>
+      <span class="eyebrow"><i></i> <span data-i18n="home.eyebrow">كل المعالجة تتم داخل متصفحك — بدون سيرفر</span></span>
+      <h1><span data-i18n="home.h1a">حوّل أي لينك أو نص</span><br><span data-i18n="home.h1b">لكود QR</span> <span data-i18n="home.h1c">جاهز للطباعة</span></h1>
+      <p class="hero-sub" data-i18n="home.sub">qrmo أداة مجانية بالكامل لعمل أكواد QR احترافية: واي فاي، جهات اتصال، مواقع، وحتى توليد بالجملة لمئات الأكواد دفعة واحدة.</p>
       <div class="hero-actions">
-        <a href="generator.html" class="btn btn-primary">افتح المولّد الكامل</a>
-        <a href="batch.html" class="btn btn-ghost-dark">توليد بالجملة</a>
+        <a href="generator.html" class="btn btn-primary" data-i18n="home.cta.full">افتح المولّد الكامل</a>
+        <a href="batch.html" class="btn btn-ghost-dark" data-i18n="home.cta.batch">توليد بالجملة</a>
       </div>
-      <p class="hero-note">بدون تسجيل · بدون حدود استخدام · بياناتك متسيبش متصفحك</p>
+      <p class="hero-note" data-i18n="home.note">بدون تسجيل · بدون حدود استخدام · بياناتك متسيبش متصفحك</p>
     </div>
 
     <div class="proof-card demo-card">
       <span class="finder tl"><svg viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="7" width="6" height="6" fill="currentColor"/></svg></span>
       <span class="finder tr"><svg viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="7" width="6" height="6" fill="currentColor"/></svg></span>
       <span class="finder br"><svg viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="7" width="6" height="6" fill="currentColor"/></svg></span>
-      <label for="demoInput">جرّب دلوقتي</label>
-      <input id="demoInput" class="demo-input" type="text" placeholder="اكتب لينك أو أي نص..." value="https://qrmo.example">
+      <label for="demoInput" data-i18n="home.demo.label">جرّب دلوقتي</label>
+      <input id="demoInput" class="demo-input" type="text" placeholder="اكتب لينك أو أي نص..." data-i18n-placeholder="home.demo.placeholder" value="https://qrmo.example">
       <div class="demo-preview" id="demoPreview"><span class="scan-line"></span></div>
-      <p class="demo-hint">الكود بيتحدّث تلقائي وانت بتكتب</p>
+      <p class="demo-hint" data-i18n="home.demo.hint">الكود بيتحدّث تلقائي وانت بتكتب</p>
       <div class="demo-actions">
-        <button class="btn btn-ghost-light" id="demoDownload" type="button">تحميل PNG</button>
-        <a href="generator.html" class="btn btn-primary">الأداة الكاملة ←</a>
+        <button class="btn btn-ghost-light" id="demoDownload" type="button" data-i18n="home.demo.dlpng">تحميل PNG</button>
+        <a href="generator.html" class="btn btn-primary" data-i18n="home.demo.full">الأداة الكاملة ←</a>
       </div>
     </div>
   </div>
@@ -61,44 +102,44 @@
 <section class="section-alt">
   <div class="container">
     <div class="section-head reveal">
-      <h2>ليه qrmo؟</h2>
-      <p>مش مجرد مولّد أكواد — دي مجموعة أدوات مبنية عشان تشتغل بشكل احترافي من أول استخدام.</p>
+      <h2 data-i18n="home.why.h2">ليه qrmo؟</h2>
+      <p data-i18n="home.why.p">مش مجرد مولّد أكواد — دي مجموعة أدوات مبنية عشان تشتغل بشكل احترافي من أول استخدام.</p>
     </div>
     <div class="grid-3">
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3.5v5c0 4.5-3 7.5-7 9.5-4-2-7-5-7-9.5v-5L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>خصوصية كاملة</h3>
-        <p>كل الأكواد بتتولّد ببرمجة تعمل جوه المتصفح، مفيش أي بيانات بتتبعت لسيرفر ولا بتتخزّن.</p>
+        <h3 data-i18n="home.feat.privacy.h3">خصوصية كاملة</h3>
+        <p data-i18n="home.feat.privacy.p">كل الأكواد بتتولّد ببرمجة تعمل جوه المتصفح، مفيش أي بيانات بتتبعت لسيرفر ولا بتتخزّن.</p>
       </div>
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>تخصيص كامل</h3>
-        <p>غيّر الألوان، شكل النقط والحواف، وضيف لوجوك جوه الكود من غير ما يأثر على قراءته.</p>
+        <h3 data-i18n="home.feat.customize.h3">تخصيص كامل</h3>
+        <p data-i18n="home.feat.customize.p">غيّر الألوان، شكل النقط والحواف، وضيف لوجوك جوه الكود من غير ما يأثر على قراءته.</p>
       </div>
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg></div>
-        <h3>7 أنواع محتوى</h3>
-        <p>لينك، نص، واي فاي، جهة اتصال، إيميل، تليفون، رسالة SMS، وموقع جغرافي — كلهم بصيغة سليمة 100%.</p>
+        <h3 data-i18n="home.feat.types.h3">7 أنواع محتوى</h3>
+        <p data-i18n="home.feat.types.p">لينك، نص، واي فاي، جهة اتصال، إيميل، تليفون، رسالة SMS، وموقع جغرافي — كلهم بصيغة سليمة 100%.</p>
       </div>
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M4 16V6a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H8a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 20l4-4M4 20h4v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>توليد بالجملة</h3>
-        <p>ارفع ملف فيه قايمة لينكات أو بيانات، واحصل على مئات الأكواد دفعة واحدة كملف ZIP أو شيت جاهز للطباعة.</p>
+        <h3 data-i18n="home.feat.batch.h3">توليد بالجملة</h3>
+        <p data-i18n="home.feat.batch.p">ارفع ملف فيه قايمة لينكات أو بيانات، واحصل على مئات الأكواد دفعة واحدة كملف ZIP أو شيت جاهز للطباعة.</p>
       </div>
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13M12 16l-4-4M12 16l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>PNG و SVG</h3>
-        <p>نزّل الكود بجودة عالية للاستخدام الرقمي، أو بصيغة SVG تتكبّر لأي حجم من غير ما تفقد وضوحها في الطباعة.</p>
+        <h3 data-i18n="home.feat.formats.h3">PNG و SVG</h3>
+        <p data-i18n="home.feat.formats.p">نزّل الكود بجودة عالية للاستخدام الرقمي، أو بصيغة SVG تتكبّر لأي حجم من غير ما تفقد وضوحها في الطباعة.</p>
       </div>
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>مجاني بالكامل</h3>
-        <p>من غير حساب، من غير اشتراك، من غير حد أقصى لعدد الأكواد اللي تعملها.</p>
+        <h3 data-i18n="home.feat.free.h3">مجاني بالكامل</h3>
+        <p data-i18n="home.feat.free.p">من غير حساب، من غير اشتراك، من غير حد أقصى لعدد الأكواد اللي تعملها.</p>
       </div>
       <div class="feature-card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="10" cy="12.5" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M17 10l4-2v9l-4-2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>قارئ من الكاميرا</h3>
-        <p>امسح أي كود QR بكاميرا جهازك أو ارفع صورة، ويظهرلك المحتوى فورًا — <a href="scanner.html" style="color:var(--ultra-600)">جرّب القارئ</a>.</p>
+        <h3 data-i18n="home.feat.scanner.h3">قارئ من الكاميرا</h3>
+        <p><span data-i18n="home.feat.scanner.p1">امسح أي كود QR بكاميرا جهازك أو ارفع صورة، ويظهرلك المحتوى فورًا — </span><a href="scanner.html" style="color:var(--ultra-600)" data-i18n="home.feat.scanner.link">جرّب القارئ</a>.</p>
       </div>
     </div>
   </div>
@@ -107,14 +148,14 @@
 <section>
   <div class="container">
     <div class="section-head reveal">
-      <h2>يشتغل في 4 خطوات</h2>
-      <p>من الفكرة للكود الجاهز للطباعة في أقل من دقيقة.</p>
+      <h2 data-i18n="home.steps.h2">يشتغل في 4 خطوات</h2>
+      <p data-i18n="home.steps.p">من الفكرة للكود الجاهز للطباعة في أقل من دقيقة.</p>
     </div>
     <div class="steps">
-      <div class="step reveal"><span class="num mono">1</span><h4>اختار نوع المحتوى</h4><p>لينك، نص، واي فاي، جهة اتصال، وأنواع تانية.</p></div>
-      <div class="step reveal"><span class="num mono">2</span><h4>اكتب بياناتك</h4><p>املا الحقول المناسبة للنوع اللي اخترته.</p></div>
-      <div class="step reveal"><span class="num mono">3</span><h4>خصّص الشكل</h4><p>الألوان، شكل النقط، وضيف لوجو لو حابب.</p></div>
-      <div class="step reveal"><span class="num mono">4</span><h4>نزّل الكود</h4><p>PNG أو SVG، جاهز للاستخدام أو الطباعة فورًا.</p></div>
+      <div class="step reveal"><span class="num mono">1</span><h4 data-i18n="home.step1.h4">اختار نوع المحتوى</h4><p data-i18n="home.step1.p">لينك، نص، واي فاي، جهة اتصال، وأنواع تانية.</p></div>
+      <div class="step reveal"><span class="num mono">2</span><h4 data-i18n="home.step2.h4">اكتب بياناتك</h4><p data-i18n="home.step2.p">املا الحقول المناسبة للنوع اللي اخترته.</p></div>
+      <div class="step reveal"><span class="num mono">3</span><h4 data-i18n="home.step3.h4">خصّص الشكل</h4><p data-i18n="home.step3.p">الألوان، شكل النقط، وضيف لوجو لو حابب.</p></div>
+      <div class="step reveal"><span class="num mono">4</span><h4 data-i18n="home.step4.h4">نزّل الكود</h4><p data-i18n="home.step4.p">PNG أو SVG، جاهز للاستخدام أو الطباعة فورًا.</p></div>
     </div>
   </div>
 </section>
@@ -125,9 +166,9 @@
       <span class="finder tl"><svg viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="7" width="6" height="6" fill="currentColor"/></svg></span>
       <span class="finder tr"><svg viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="7" width="6" height="6" fill="currentColor"/></svg></span>
       <span class="finder br"><svg viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="7" width="6" height="6" fill="currentColor"/></svg></span>
-      <h2 style="font-size:28px;">جاهز تعمل أول كود؟</h2>
-      <p style="color:var(--muted-onlight); margin-top:10px;">مفيش تسجيل، مفيش خطوات زيادة — افتح المولّد وابدأ فورًا.</p>
-      <div style="margin-top:24px;"><a href="generator.html" class="btn btn-primary">افتح المولّد</a></div>
+      <h2 style="font-size:28px;" data-i18n="home.cta2.h2">جاهز تعمل أول كود؟</h2>
+      <p style="color:var(--muted-onlight); margin-top:10px;" data-i18n="home.cta2.p">مفيش تسجيل، مفيش خطوات زيادة — افتح المولّد وابدأ فورًا.</p>
+      <div style="margin-top:24px;"><a href="generator.html" class="btn btn-primary" data-i18n="home.cta2.btn">افتح المولّد</a></div>
     </div>
   </div>
 </section>
@@ -140,24 +181,25 @@
           <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2.4"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg></span>
           qrmo
         </a>
-        <p style="color:var(--muted-ondark); font-size:13.5px; margin-top:10px; max-width:32ch;">مولّد أكواد QR احترافي، مجاني، ويشتغل بالكامل من متصفحك.</p>
+        <p style="color:var(--muted-ondark); font-size:13.5px; margin-top:10px; max-width:32ch;" data-i18n="footer.tagline">مولّد أكواد QR احترافي، مجاني، ويشتغل بالكامل من متصفحك.</p>
       </div>
       <ul class="footer-links">
-        <li><a href="generator.html">المولّد</a></li>
-        <li><a href="batch.html">توليد بالجملة</a></li>
-        <li><a href="scanner.html">القارئ</a></li>
-        <li><a href="about.html">عن qrmo</a></li>
-        <li><a href="https://github.com/iegy/qrmo" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="generator.html" data-i18n="nav.generator">المولّد</a></li>
+        <li><a href="batch.html" data-i18n="nav.batch">توليد بالجملة</a></li>
+        <li><a href="scanner.html" data-i18n="nav.scanner">القارئ</a></li>
+        <li><a href="about.html" data-i18n="nav.about">عن qrmo</a></li>
+        <li><a href="https://github.com/iegy/qrmo" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year></span> qrmo</span>
-      <span>صُنع بواسطة <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--paper-50)">iegy</a></span>
+      <span><span data-i18n="footer.made">صُنع بواسطة</span> <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--paper-50)">iegy</a></span>
     </div>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
+<script src="i18n.js"></script>
 <script src="qr-core.js"></script>
 <script src="main.js"></script>
 <script src="home.js"></script>
