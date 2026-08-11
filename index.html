@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>qrmo — مولّد أكواد QR احترافي مجانًا</title>
 <meta name="description" content="اصنع أكواد QR احترافية للينكات، الواي فاي، جهات الاتصال، والمزيد، خصّصها بألوانك ولوجوك، ونزّلها فورًا. كل المعالجة داخل متصفحك بدون تسجيل.">
-<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -19,6 +19,7 @@
     <ul class="nav-links">
       <li><a href="generator.html">المولّد</a></li>
       <li><a href="batch.html">توليد بالجملة</a></li>
+      <li><a href="scanner.html">القارئ</a></li>
       <li><a href="about.html">عن qrmo</a></li>
     </ul>
     <a href="generator.html" class="nav-cta" style="display:inline-flex">ابدأ الآن</a>
@@ -94,6 +95,11 @@
         <h3>مجاني بالكامل</h3>
         <p>من غير حساب، من غير اشتراك، من غير حد أقصى لعدد الأكواد اللي تعملها.</p>
       </div>
+      <div class="feature-card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="10" cy="12.5" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M17 10l4-2v9l-4-2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>قارئ من الكاميرا</h3>
+        <p>امسح أي كود QR بكاميرا جهازك أو ارفع صورة، ويظهرلك المحتوى فورًا — <a href="scanner.html" style="color:var(--ultra-600)">جرّب القارئ</a>.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -139,8 +145,9 @@
       <ul class="footer-links">
         <li><a href="generator.html">المولّد</a></li>
         <li><a href="batch.html">توليد بالجملة</a></li>
+        <li><a href="scanner.html">القارئ</a></li>
         <li><a href="about.html">عن qrmo</a></li>
-        
+        <li><a href="https://github.com/iegy/qrmo" target="_blank" rel="noopener">GitHub</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
@@ -151,8 +158,8 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
-<script src="assets/js/qr-core.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/home.js"></script>
+<script src="qr-core.js"></script>
+<script src="main.js"></script>
+<script src="home.js"></script>
 </body>
 </html>

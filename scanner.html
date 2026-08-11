@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>القارئ — qrmo</title>
+<meta name="description" content="اقرأ أي كود QR من كاميرا جهازك أو من صورة، ويظهرلك المحتوى فورًا. كل القراءة بتتم جوه متصفحك.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2.4"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg></span>
+      qrmo <small class="mono">QR TOOLKIT</small>
+    </a>
+    <ul class="nav-links">
+      <li><a href="generator.html">المولّد</a></li>
+      <li><a href="batch.html">توليد بالجملة</a></li>
+      <li><a href="scanner.html" class="active">القارئ</a></li>
+      <li><a href="about.html">عن qrmo</a></li>
+    </ul>
+    <a href="generator.html" class="nav-cta" style="display:inline-flex">المولّد</a>
+    <button class="nav-toggle" aria-label="فتح القائمة" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="container tools-header">
+  <h1>قارئ الأكواد</h1>
+  <p>شغّل الكاميرا أو ارفع صورة فيها كود QR، وهيبان لك المحتوى فورًا — القراءة كلها بتتم جوه متصفحك.</p>
+</div>
+
+<div class="container" style="padding-bottom:80px;">
+  <div class="scanner-wrap">
+
+    <div class="scanner-video-wrap" id="videoWrap">
+      <div class="placeholder" id="videoPlaceholder">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 7V5.5A1.5 1.5 0 0110.5 4h1A1.5 1.5 0 0113 5.5V7" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="12.5" r="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M17 10l4-2v9l-4-2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        الكاميرا مقفولة دلوقتي
+      </div>
+      <video id="video" playsinline muted hidden></video>
+      <div class="viewfinder" id="viewfinder" hidden></div>
+    </div>
+    <canvas id="captureCanvas" hidden></canvas>
+
+    <div class="scanner-actions">
+      <button class="btn btn-primary" id="startBtn" type="button">تشغيل الكاميرا</button>
+      <button class="btn btn-ghost-dark" id="stopBtn" type="button" hidden>إيقاف الكاميرا</button>
+    </div>
+    <p class="hint" id="camHint" style="margin-top:10px; text-align:center;"></p>
+
+    <div class="scanner-divider">أو</div>
+
+    <div class="scanner-upload">
+      <label class="upload-btn" for="imgInput" style="display:inline-block;">ارفع صورة فيها كود QR</label>
+      <input type="file" id="imgInput" accept="image/*" hidden>
+    </div>
+
+    <div class="scan-result" id="scanResult" hidden>
+      <span class="type-badge" id="resultType">نتيجة المسح</span>
+      <dl id="resultFields"></dl>
+      <div class="scan-raw" id="resultRaw"></div>
+      <div class="scan-result-actions" id="resultActions"></div>
+    </div>
+
+    <div class="scan-history" id="historyWrap" hidden>
+      <h3>آخر الأكواد اللي اتقرت (الجلسة دي بس)</h3>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© <span data-year></span> qrmo</span>
+      <span>صُنع بواسطة <a href="https://iegy.net" target="_blank" rel="noopener" style="color:var(--paper-50)">iegy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="main.js"></script>
+<script src="scanner.js"></script>
+</body>
+</html>
