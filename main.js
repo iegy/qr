@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 820 && links.classList.contains('open')){
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
