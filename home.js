@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const downloadBtn = document.getElementById('demoDownload');
   if (!input || !preview) return;
 
-  let qr = QRMO.createQR({ data: input.value || ' ', size: 200, fg: '#17171f', bg: '#ffffff' });
+  let qr = QRMO.createQR({ data: input.value || ' ', size: 200, fg: '#211E1A', bg: '#ffffff' });
   qr.append(preview);
 
   let timer;

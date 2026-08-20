@@ -59,14 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
   applyThemeColorMeta();
   if (themeBtn){
     themeBtn.addEventListener('click', () => {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (isLight){
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem(THEME_KEY, 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem(THEME_KEY, 'light');
-      }
+      const current = document.documentElement.dataset.theme || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(THEME_KEY, next);
       applyThemeColorMeta();
     });
   }
@@ -74,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- PWA: register service worker (offline + installable) ---- */
   if ('serviceWorker' in navigator){
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(() => { /* offline support is a bonus, not required */ });
+      navigator.serviceWorker.register((document.documentElement.dataset.assetBase || '') + 'sw.js').catch(() => { /* offline support is a bonus, not required */ });
     });
   }
 

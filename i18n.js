@@ -1,4 +1,4 @@
-// qrmo — lightweight client-side i18n (Arabic default, English toggle).
+// qrmo — lightweight client-side i18n with indexable /en/ pages.
 // No build step, no network calls: everything ships as one dictionary and
 // swaps text in place. Search engines still see the Arabic source (the
 // default `lang="ar" dir="rtl"` markup), this only affects what a visitor's
@@ -41,8 +41,8 @@ const QRMO_I18N = (() => {
       'home.feat.privacy.p': 'كل الأكواد بتتولّد ببرمجة تعمل جوه المتصفح، مفيش أي بيانات بتتبعت لسيرفر ولا بتتخزّن.',
       'home.feat.customize.h3': 'تخصيص كامل',
       'home.feat.customize.p': 'غيّر الألوان، شكل النقط والحواف، وضيف لوجوك جوه الكود من غير ما يأثر على قراءته.',
-      'home.feat.types.h3': '7 أنواع محتوى',
-      'home.feat.types.p': 'لينك، نص، واي فاي، جهة اتصال، إيميل، تليفون، رسالة SMS، وموقع جغرافي — كلهم بصيغة سليمة 100%.',
+      'home.feat.types.h3': '12 نوع محتوى',
+      'home.feat.types.p': 'لينك، نص، واي فاي، جهة اتصال، إيميل، تليفون، SMS، موقع، واتساب، حدث، سوشيال وتقييمات — بصيغ سليمة وجاهزة.',
       'home.feat.batch.h3': 'توليد بالجملة',
       'home.feat.batch.p': 'ارفع ملف فيه قايمة لينكات أو بيانات، واحصل على مئات الأكواد دفعة واحدة كملف ZIP أو شيت جاهز للطباعة.',
       'home.feat.formats.h3': 'PNG و SVG',
@@ -72,6 +72,11 @@ const QRMO_I18N = (() => {
       'gen.p': 'اختار نوع المحتوى، املا البيانات، وخصّص الشكل — الكود بيتحدّث لحظيًا على اليمين.',
       'gen.tab.link': 'لينك', 'gen.tab.text': 'نص', 'gen.tab.wifi': 'واي فاي', 'gen.tab.vcard': 'جهة اتصال',
       'gen.tab.email': 'إيميل', 'gen.tab.phone': 'تليفون', 'gen.tab.sms': 'رسالة SMS', 'gen.tab.location': 'موقع جغرافي',
+      'gen.tab.whatsapp': 'واتساب', 'gen.tab.event': 'حدث', 'gen.tab.social': 'سوشيال', 'gen.tab.review': 'تقييمات',
+      'gen.wa.phone': 'رقم واتساب بكود الدولة', 'gen.wa.message': 'رسالة جاهزة (اختياري)', 'gen.wa.hint': 'هيتولّد رابط wa.me مباشر يفتح المحادثة بدون تخزين أي بيانات.',
+      'gen.event.title': 'اسم الحدث', 'gen.event.start': 'البداية', 'gen.event.end': 'النهاية (اختياري)', 'gen.event.location': 'المكان', 'gen.event.description': 'وصف مختصر',
+      'gen.social.url': 'رابط الحساب أو الصفحة', 'gen.social.hint': 'يعمل مع Instagram وFacebook وTikTok وYouTube وLinkedIn وأي رابط اجتماعي.',
+      'gen.review.url': 'رابط صفحة التقييم', 'gen.review.hint': 'مناسب لكروت “قيّمنا” في Google Maps أو أي منصة تقييمات.',
 
       'gen.panel.data': 'البيانات',
       'gen.link.label': 'اللينك',
@@ -90,6 +95,8 @@ const QRMO_I18N = (() => {
       'gen.loc.lng': 'خط الطول (Longitude)', 'gen.loc.lngPh': '31.2357',
       'gen.loc.hint': 'تقدر تجيب الإحداثيات من خرائط جوجل: دوس بزر الماوس الأيمن على المكان وانسخ الأرقام.',
 
+      'gen.templates.h3': 'قوالب جاهزة', 'gen.templates.badge': 'جديد', 'gen.templates.p': 'ابدأ بتصميم جاهز ثم عدّل عليه بحرية.',
+      'gen.templates.iegy': 'iegy', 'gen.templates.classic': 'كلاسيك', 'gen.templates.sage': 'Sage', 'gen.templates.orange': 'برتقالي', 'gen.templates.night': 'ليلي', 'gen.templates.rounded': 'مدوّر',
       'gen.panel.custom': 'التخصيص',
       'gen.fg': 'لون الكود', 'gen.bg': 'لون الخلفية',
       'gen.dotStyle': 'شكل النقط',
@@ -117,6 +124,9 @@ const QRMO_I18N = (() => {
       'gen.size': 'الحجم:',
       'gen.logo': 'لوجو في النص (اختياري)', 'gen.logo.choose': 'اختار صورة', 'gen.logo.clear': 'إزالة اللوجو',
       'gen.dl.png': 'تحميل PNG', 'gen.dl.svg': 'تحميل SVG',
+      'gen.health.title': 'QR Health', 'gen.health.wait': 'جاري تقييم الكود…', 'gen.health.excellent': 'ممتاز — جاهز للطباعة والمسح', 'gen.health.good': 'جيد جدًا — قابل للقراءة بثبات', 'gen.health.fair': 'مقبول — يفضّل تحسين التباين أو تقليل البيانات', 'gen.health.poor': 'ضعيف — عدّل التصميم قبل الطباعة',
+      'gen.warn.logoSize': 'حجم اللوجو كبير. استخدم صورة أقل من 3MB.',
+      'gen.print.h4': 'استوديو الطباعة', 'gen.print.size': 'المقاس', 'gen.print.grid': 'الشيت', 'gen.print.png': 'PNG للطباعة', 'gen.print.pdf': 'PDF A4', 'gen.print.sheet': 'طباعة شيت', 'gen.print.error': 'تعذر إنشاء ملف الطباعة. جرّب مرة أخرى أو استخدم PNG.',
 
       'gen.warn.contrast': 'تحذير: الألوان دي متقاربة وممكن تصعّب قراءة الكود — جرّب كونتراست أعلى.',
       'gen.warn.unreadable': 'تحذير: الكود بالإعدادات دي طلع صعب القراءة (مثلاً لوجو كبير مع تصحيح خطأ منخفض) — جرّب تقلّل حجم اللوجو أو تزوّد مستوى تصحيح الخطأ.',
@@ -126,6 +136,7 @@ const QRMO_I18N = (() => {
       'gen.lib.save': 'احفظ الكود ده',
       'gen.lib.empty': 'لسه مفيش أكواد محفوظة على الجهاز ده.',
       'gen.lib.load': 'تحميل', 'gen.lib.delete': 'حذف',
+      'gen.lib.folder': 'المجلد', 'gen.lib.search': 'بحث', 'gen.lib.export': 'نسخة احتياطية', 'gen.lib.import': 'استعادة', 'gen.lib.favorite': 'مفضلة', 'gen.lib.duplicate': 'نسخ', 'gen.lib.importError': 'ملف النسخة الاحتياطية غير صالح.',
 
       'batch.h1': 'توليد بالجملة',
       'batch.p1': 'ارفع ملف نصّي (.txt أو .csv) أو الصق قايمتك، سطر لكل كود. تقدر تكتب',
@@ -136,11 +147,14 @@ const QRMO_I18N = (() => {
       'batch.paste.label': 'أو الصق القايمة هنا',
       'batch.type.label': 'نوع القيم',
       'batch.type.auto': 'تلقائي (روابط أو نص)', 'batch.type.tel': 'أرقام تليفونات', 'batch.type.mailto': 'إيميلات',
+      'batch.type.url': 'روابط', 'batch.type.text': 'نصوص', 'batch.type.whatsapp': 'أرقام واتساب',
       'batch.color.label': 'لون الكود',
       'batch.previewBtn': 'معاينة القايمة',
       'batch.results.h3': 'المعاينة (',
       'batch.results.h3end': 'عنصر)',
       'batch.table.label': 'التسمية', 'batch.table.value': 'القيمة',
+      'batch.table.type': 'النوع', 'batch.table.color': 'اللون',
+      'batch.mapping.h3': 'ربط أعمدة CSV', 'batch.mapping.p': 'حدد العمود المستخدم للاسم والقيمة والنوع واللون. qrmo بيحاول يختارهم تلقائيًا.', 'batch.mapping.label': 'التسمية', 'batch.mapping.value': 'القيمة / الرابط', 'batch.mapping.type': 'النوع', 'batch.mapping.color': 'اللون', 'batch.mapping.none': '— بدون —',
       'batch.generateBtn': 'ولّد كل الأكواد', 'batch.generating': 'بيتولّد...',
       'batch.downloadZip': 'تحميل الكل (ZIP)', 'batch.printSheet': 'طباعة كشيت',
 
@@ -159,10 +173,13 @@ const QRMO_I18N = (() => {
       'scan.badge.link': 'رابط', 'scan.badge.wifi': 'شبكة واي فاي', 'scan.badge.vcard': 'جهة اتصال',
       'scan.badge.email': 'إيميل', 'scan.badge.tel': 'رقم تليفون', 'scan.badge.sms': 'رسالة SMS',
       'scan.badge.geo': 'موقع جغرافي', 'scan.badge.text': 'نص',
+      'scan.badge.whatsapp': 'واتساب', 'scan.badge.event': 'حدث',
       'scan.action.openLink': 'افتح الرابط', 'scan.action.sendEmail': 'ابعت إيميل', 'scan.action.call': 'اتصل', 'scan.action.openMaps': 'افتح في خرائط جوجل',
+      'scan.action.openWhatsapp': 'افتح واتساب',
       'scan.field.ssid': 'اسم الشبكة', 'scan.field.pass': 'كلمة السر', 'scan.field.enc': 'التشفير',
       'scan.field.name': 'الاسم', 'scan.field.tel': 'التليفون', 'scan.field.email': 'العنوان',
       'scan.field.org': 'الشركة', 'scan.field.smsNum': 'الرقم', 'scan.field.smsMsg': 'الرسالة', 'scan.field.coords': 'الإحداثيات',
+      'scan.field.title': 'العنوان', 'scan.field.location': 'المكان',
       'scan.na': '—',
 
       'about.h1': 'عن qrmo',
@@ -213,8 +230,8 @@ const QRMO_I18N = (() => {
       'home.feat.privacy.p': 'Every code is generated by code running inside your browser — nothing is ever sent to or stored on a server.',
       'home.feat.customize.h3': 'Full customization',
       'home.feat.customize.p': 'Change colors, dot and corner shapes, and add your own logo in the middle without hurting scannability.',
-      'home.feat.types.h3': '7 content types',
-      'home.feat.types.p': 'Link, text, Wi-Fi, contact card, email, phone, SMS, and geo-location — every one built with the correct spec, 100%.',
+      'home.feat.types.h3': '12 content types',
+      'home.feat.types.p': 'Link, text, Wi-Fi, contact card, email, phone, SMS, location, WhatsApp, event, social and review QR codes.',
       'home.feat.batch.h3': 'Bulk generation',
       'home.feat.batch.p': 'Upload a file of links or data and get hundreds of codes at once, as a ZIP file or a print-ready sheet.',
       'home.feat.formats.h3': 'PNG & SVG',
@@ -244,6 +261,11 @@ const QRMO_I18N = (() => {
       'gen.p': 'Pick a content type, fill in the data, and customize the look — the code updates live on the side.',
       'gen.tab.link': 'Link', 'gen.tab.text': 'Text', 'gen.tab.wifi': 'Wi-Fi', 'gen.tab.vcard': 'Contact',
       'gen.tab.email': 'Email', 'gen.tab.phone': 'Phone', 'gen.tab.sms': 'SMS', 'gen.tab.location': 'Location',
+      'gen.tab.whatsapp': 'WhatsApp', 'gen.tab.event': 'Event', 'gen.tab.social': 'Social', 'gen.tab.review': 'Reviews',
+      'gen.wa.phone': 'WhatsApp number with country code', 'gen.wa.message': 'Prefilled message (optional)', 'gen.wa.hint': 'Creates a direct wa.me link without sending or storing your data.',
+      'gen.event.title': 'Event title', 'gen.event.start': 'Starts', 'gen.event.end': 'Ends (optional)', 'gen.event.location': 'Location', 'gen.event.description': 'Short description',
+      'gen.social.url': 'Profile or page URL', 'gen.social.hint': 'Works with Instagram, Facebook, TikTok, YouTube, LinkedIn and any social URL.',
+      'gen.review.url': 'Review page URL', 'gen.review.hint': 'Great for Google Maps and other “Review us” cards.',
 
       'gen.panel.data': 'Data',
       'gen.link.label': 'Link',
@@ -262,6 +284,8 @@ const QRMO_I18N = (() => {
       'gen.loc.lng': 'Longitude', 'gen.loc.lngPh': '31.2357',
       'gen.loc.hint': 'You can get coordinates from Google Maps: right-click the location and copy the numbers.',
 
+      'gen.templates.h3': 'Ready-made templates', 'gen.templates.badge': 'NEW', 'gen.templates.p': 'Start from a preset and customize freely.',
+      'gen.templates.iegy': 'iegy', 'gen.templates.classic': 'Classic', 'gen.templates.sage': 'Sage', 'gen.templates.orange': 'Orange', 'gen.templates.night': 'Night', 'gen.templates.rounded': 'Rounded',
       'gen.panel.custom': 'Customization',
       'gen.fg': 'Code color', 'gen.bg': 'Background color',
       'gen.dotStyle': 'Dot shape',
@@ -289,6 +313,9 @@ const QRMO_I18N = (() => {
       'gen.size': 'Size:',
       'gen.logo': 'Logo in the center (optional)', 'gen.logo.choose': 'Choose image', 'gen.logo.clear': 'Remove logo',
       'gen.dl.png': 'Download PNG', 'gen.dl.svg': 'Download SVG',
+      'gen.health.title': 'QR Health', 'gen.health.wait': 'Evaluating code…', 'gen.health.excellent': 'Excellent — print and scan ready', 'gen.health.good': 'Very good — reliably scannable', 'gen.health.fair': 'Fair — improve contrast or reduce data', 'gen.health.poor': 'Poor — adjust the design before printing',
+      'gen.warn.logoSize': 'The logo is too large. Use an image under 3MB.',
+      'gen.print.h4': 'Print Studio', 'gen.print.size': 'Size', 'gen.print.grid': 'Sheet', 'gen.print.png': 'Print PNG', 'gen.print.pdf': 'A4 PDF', 'gen.print.sheet': 'Print sheet', 'gen.print.error': 'Could not create the print file. Try again or use PNG.',
 
       'gen.warn.contrast': 'Warning: these colors are too close together and may make the code hard to scan — try more contrast.',
       'gen.warn.unreadable': 'Warning: this code came out hard to read with the current settings (e.g. a large logo with low error correction) — try shrinking the logo or raising the error correction level.',
@@ -298,6 +325,7 @@ const QRMO_I18N = (() => {
       'gen.lib.save': 'Save this code',
       'gen.lib.empty': 'No codes saved on this device yet.',
       'gen.lib.load': 'Load', 'gen.lib.delete': 'Delete',
+      'gen.lib.folder': 'Folder', 'gen.lib.search': 'Search', 'gen.lib.export': 'Backup', 'gen.lib.import': 'Restore', 'gen.lib.favorite': 'Favorite', 'gen.lib.duplicate': 'Duplicate', 'gen.lib.importError': 'Invalid backup file.',
 
       'batch.h1': 'Bulk generation',
       'batch.p1': 'Upload a text file (.txt or .csv) or paste your list, one line per code. You can write',
@@ -308,11 +336,14 @@ const QRMO_I18N = (() => {
       'batch.paste.label': 'Or paste your list here',
       'batch.type.label': 'Value type',
       'batch.type.auto': 'Auto (links or text)', 'batch.type.tel': 'Phone numbers', 'batch.type.mailto': 'Emails',
+      'batch.type.url': 'URLs', 'batch.type.text': 'Text', 'batch.type.whatsapp': 'WhatsApp numbers',
       'batch.color.label': 'Code color',
       'batch.previewBtn': 'Preview list',
       'batch.results.h3': 'Preview (',
       'batch.results.h3end': 'items)',
       'batch.table.label': 'Label', 'batch.table.value': 'Value',
+      'batch.table.type': 'Type', 'batch.table.color': 'Color',
+      'batch.mapping.h3': 'CSV column mapping', 'batch.mapping.p': 'Choose the columns used for label, value, type and color. qrmo tries to detect them automatically.', 'batch.mapping.label': 'Label', 'batch.mapping.value': 'Value / URL', 'batch.mapping.type': 'Type', 'batch.mapping.color': 'Color', 'batch.mapping.none': '— none —',
       'batch.generateBtn': 'Generate all codes', 'batch.generating': 'Generating...',
       'batch.downloadZip': 'Download all (ZIP)', 'batch.printSheet': 'Print sheet',
 
@@ -331,10 +362,13 @@ const QRMO_I18N = (() => {
       'scan.badge.link': 'Link', 'scan.badge.wifi': 'Wi-Fi network', 'scan.badge.vcard': 'Contact',
       'scan.badge.email': 'Email', 'scan.badge.tel': 'Phone number', 'scan.badge.sms': 'SMS',
       'scan.badge.geo': 'Location', 'scan.badge.text': 'Text',
+      'scan.badge.whatsapp': 'WhatsApp', 'scan.badge.event': 'Event',
       'scan.action.openLink': 'Open link', 'scan.action.sendEmail': 'Send email', 'scan.action.call': 'Call', 'scan.action.openMaps': 'Open in Google Maps',
+      'scan.action.openWhatsapp': 'Open WhatsApp',
       'scan.field.ssid': 'Network name', 'scan.field.pass': 'Password', 'scan.field.enc': 'Encryption',
       'scan.field.name': 'Name', 'scan.field.tel': 'Phone', 'scan.field.email': 'Address',
       'scan.field.org': 'Company', 'scan.field.smsNum': 'Number', 'scan.field.smsMsg': 'Message', 'scan.field.coords': 'Coordinates',
+      'scan.field.title': 'Title', 'scan.field.location': 'Location',
       'scan.na': '—',
 
       'about.h1': 'About qrmo',
@@ -355,7 +389,7 @@ const QRMO_I18N = (() => {
   const STORAGE_KEY = 'qrmo-lang';
 
   function getLang(){
-    return localStorage.getItem(STORAGE_KEY) || 'ar';
+    return document.documentElement.dataset.defaultLang || (location.pathname.includes('/en/') ? 'en' : 'ar');
   }
 
   function t(key, lang){
@@ -394,7 +428,18 @@ const QRMO_I18N = (() => {
   }
 
   function toggle(){
-    setLang(getLang() === 'ar' ? 'en' : 'ar');
+    const current = getLang();
+    const path = location.pathname;
+    if (current === 'ar'){
+      const slash = path.endsWith('/');
+      const target = slash ? path + 'en/' : path.replace(/\/([^\/]+)$/, '/en/$1');
+      localStorage.setItem(STORAGE_KEY, 'en');
+      location.href = target + location.search + location.hash;
+    } else {
+      const target = path.replace('/en/', '/');
+      localStorage.setItem(STORAGE_KEY, 'ar');
+      location.href = target + location.search + location.hash;
+    }
   }
 
   function init(){

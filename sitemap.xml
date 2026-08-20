@@ -1,27 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://iegy.net/qr/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iegy.net/qr/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://iegy.net/qr/generator.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/generator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/generator.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/generator.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iegy.net/qr/en/generator.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/generator.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/generator.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/generator.html"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://iegy.net/qr/batch.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/batch.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/batch.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/batch.html"/>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://iegy.net/qr/en/batch.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/batch.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/batch.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/batch.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iegy.net/qr/scanner.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/scanner.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/scanner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/scanner.html"/>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://iegy.net/qr/en/scanner.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/scanner.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/scanner.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/scanner.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iegy.net/qr/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/about.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://iegy.net/qr/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://iegy.net/qr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iegy.net/qr/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iegy.net/qr/about.html"/>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
