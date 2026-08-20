@@ -23,3 +23,13 @@ A Chromium end-to-end localhost smoke test was attempted, but this execution env
 - Solid preset options explicitly clear stale gradient state.
 - Generator draft state is restored from `qrmo-generator-draft-v2` after refresh.
 - Service worker cache version bumped to `qrmo-v2.0.1`.
+
+## v2.0.2 scanner patch
+
+- `scanner.js`, `i18n.js`, and `sw.js` pass `node --check`.
+- No duplicate HTML IDs were found after adding the torch control.
+- Scanner i18n keys are present.
+- Service worker cache bumped to `qrmo-v2.0.2`.
+- Mobile camera algorithm now scans the centered viewfinder crop at higher effective resolution, then periodically scans the full frame.
+- Native `BarcodeDetector` is used when available, with `jsQR` fallback.
+- Physical-device camera behavior still needs final verification on the target phone after deployment because the build environment cannot access a real mobile camera.

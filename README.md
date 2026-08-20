@@ -59,6 +59,7 @@ qrmo/
 كل الإصدارات مثبتة في روابط CDN ومضافة إلى Service Worker cache.
 
 ## النشر
-المشروع Static بالكامل ولا يحتاج build step. 
+
+المشروع Static بالكامل ولا يحتاج build step. ارفع الملفات كما هي إلى `https://iegy.net/qr/`. عند تغيير ملفات الـPWA في إصدار لاحق، غيّر `CACHE_VERSION` داخل `sw.js`.
 
 > Dynamic QR والـDashboard غير موجودين في 2.0 عمدًا؛ سيتم إضافتهما في مرحلة لاحقة بدون التأثير على وضع Static/Private الحالي.

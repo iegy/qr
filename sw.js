@@ -1,8 +1,8 @@
 // qrmo v2 service worker — offline-first static toolkit.
-const CACHE_VERSION='qrmo-v2.0.1';
+const CACHE_VERSION='qrmo-v2.0.2';
 const PRECACHE_URLS=[
   './','index.html','generator.html','batch.html','scanner.html','about.html',
-  'style.css','qr-core.js','storage.js','main.js','i18n.js','home.js','generator.js','batch.js','scanner.js',
+  'style.css','qr-core.js','storage.js','main.js','i18n.js','i18n.js?v=2.0.2','home.js','generator.js','batch.js','scanner.js','scanner.js?v=2.0.2',
   'manifest.json','favicon.svg','favicon-32.png','icon-192.png','icon-512.png','icon-512-maskable.png','apple-touch-icon.png','og-image.png',
   'en/','en/index.html','en/generator.html','en/batch.html','en/scanner.html','en/about.html'
 ];
@@ -10,6 +10,7 @@ const CDN_URLS=[
   'https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js',
   'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js',
   'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js',
+  'https://unpkg.com/jsqr@1.4.0/dist/jsQR.js',
   'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js'
 ];
 self.addEventListener('install',event=>{
