@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const qr=QRMO.createQR({data:' ',...state},'canvas'); qr.append(stage);
   const $=(id)=>document.getElementById(id);
   const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+  const DRAFT_KEY='qrmo-generator-draft-v2';
+  let draftTimer=null;
 
   function collectData(){
     const val=(id)=>($(id)?.value||'');
@@ -60,6 +62,66 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   function currentOptions(sizeOverride){
     return {data:QRMO.buildPayload(state.type,collectData())||' ',size:sizeOverride||state.size,fg:state.fg,bg:state.bg,transparent:state.transparent,gradient:{...state.gradient},dotStyle:state.dotStyle,cornerStyle:state.cornerStyle,cornerDotStyle:state.cornerDotStyle,ecLevel:state.ecLevel,logo:state.logo,logoSize:state.logoSize};
+  }
+
+  function draftSnapshot(){
+    return {
+      version:2,
+      type:state.type,
+      data:collectData(),
+      style:{
+        fg:state.fg,bg:state.bg,transparent:state.transparent,
+        gradient:{...state.gradient},dotStyle:state.dotStyle,
+        cornerStyle:state.cornerStyle,cornerDotStyle:state.cornerDotStyle,
+        ecLevel:state.ecLevel,size:state.size,frame:state.frame,
+        frameLabel:state.frameLabel
+      },
+      print:{
+        sizeMm:$('printSizeMm')?.value||'40',
+        dpi:$('printDpi')?.value||'300',
+        grid:$('printGrid')?.value||'3x4'
+      },
+      folder:$('saveFolder')?.value||''
+    };
+  }
+  function saveDraft(){
+    try{ localStorage.setItem(DRAFT_KEY,JSON.stringify(draftSnapshot())); }catch(e){}
+  }
+  function scheduleDraftSave(){
+    clearTimeout(draftTimer);
+    draftTimer=setTimeout(saveDraft,120);
+  }
+  function restoreDraft(){
+    let draft=null;
+    try{ draft=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null'); }catch(e){}
+    if(!draft||draft.version!==2)return false;
+    const st=draft.style||{};
+    if(FIELD_MAP[draft.type]) state.type=draft.type;
+    Object.assign(state,{
+      fg:st.fg||state.fg,
+      bg:st.bg||state.bg,
+      transparent:typeof st.transparent==='boolean'?st.transparent:state.transparent,
+      gradient:{
+        enabled:typeof st.gradient?.enabled==='boolean'?st.gradient.enabled:state.gradient.enabled,
+        color2:st.gradient?.color2||state.gradient.color2,
+        type:st.gradient?.type||state.gradient.type,
+        rotation:Number(st.gradient?.rotation)||0
+      },
+      dotStyle:st.dotStyle||state.dotStyle,
+      cornerStyle:st.cornerStyle||state.cornerStyle,
+      cornerDotStyle:st.cornerDotStyle||state.cornerDotStyle,
+      ecLevel:st.ecLevel||state.ecLevel,
+      size:Number(st.size)||state.size,
+      frame:st.frame||state.frame,
+      frameLabel:st.frameLabel||''
+    });
+    switchTab(state.type);
+    applyData(state.type,draft.data||{});
+    if($('printSizeMm')&&draft.print?.sizeMm)$('printSizeMm').value=draft.print.sizeMm;
+    if($('printDpi')&&draft.print?.dpi)$('printDpi').value=draft.print.dpi;
+    if($('printGrid')&&draft.print?.grid)$('printGrid').value=draft.print.grid;
+    if($('saveFolder'))$('saveFolder').value=draft.folder||'';
+    return true;
   }
 
   const tabs=$('typeTabs');
@@ -95,18 +157,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     },260);
   }
   let renderTimer;
-  function render(){clearTimeout(renderTimer);renderTimer=setTimeout(()=>{const opts=currentOptions();QRMO.updateQR(qr,opts);lastReadable=null;updateHealth(opts,null);checkReadability(opts.data,opts);},130);}
+  function render(){scheduleDraftSave();clearTimeout(renderTimer);renderTimer=setTimeout(()=>{const opts=currentOptions();QRMO.updateQR(qr,opts);lastReadable=null;updateHealth(opts,null);checkReadability(opts.data,opts);},130);}
 
   const fg=$('f-fg'),fgVal=$('fgVal'),bg=$('f-bg'),bgVal=$('bgVal'),transparentCk=$('f-transparent');
-  fg.addEventListener('input',()=>{state.fg=fg.value;fgVal.textContent=fg.value;render();});
-  bg.addEventListener('input',()=>{state.bg=bg.value;bgVal.textContent=bg.value;render();});
-  transparentCk.addEventListener('change',()=>{state.transparent=transparentCk.checked;bg.disabled=state.transparent;render();});
-  $('invertColors').addEventListener('click',()=>{[state.fg,state.bg]=[state.bg,state.fg];fg.value=state.fg;fgVal.textContent=state.fg;bg.value=state.bg;bgVal.textContent=state.bg;render();});
+  fg.addEventListener('input',()=>{state.fg=fg.value;fgVal.textContent=fg.value;syncTemplateActive();render();});
+  bg.addEventListener('input',()=>{state.bg=bg.value;bgVal.textContent=bg.value;syncTemplateActive();render();});
+  transparentCk.addEventListener('change',()=>{state.transparent=transparentCk.checked;bg.disabled=state.transparent;syncTemplateActive();render();});
+  $('invertColors').addEventListener('click',()=>{[state.fg,state.bg]=[state.bg,state.fg];fg.value=state.fg;fgVal.textContent=state.fg;bg.value=state.bg;bgVal.textContent=state.bg;syncTemplateActive();render();});
 
   const gradientCk=$('f-gradient'),gradientOptions=$('gradientOptions'),gradient2=$('f-gradient-color2'),gradient2Val=$('gradient2Val');
-  gradientCk.addEventListener('change',()=>{state.gradient.enabled=gradientCk.checked;gradientOptions.hidden=!gradientCk.checked;render();});
-  gradient2.addEventListener('input',()=>{state.gradient.color2=gradient2.value;gradient2Val.textContent=gradient2.value;render();});
-  function wirePick(id,onSet){const el=$(id);el.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;el.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');onSet(btn.dataset.val);render();});}
+  gradientCk.addEventListener('change',()=>{state.gradient.enabled=gradientCk.checked;gradientOptions.hidden=!gradientCk.checked;syncTemplateActive();render();});
+  gradient2.addEventListener('input',()=>{state.gradient.color2=gradient2.value;gradient2Val.textContent=gradient2.value;syncTemplateActive();render();});
+  function wirePick(id,onSet){const el=$(id);el.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;el.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');onSet(btn.dataset.val);syncTemplateActive();render();});}
   wirePick('gradientTypePick',v=>state.gradient.type=v); wirePick('dotStylePick',v=>state.dotStyle=v); wirePick('cornerStylePick',v=>state.cornerStyle=v); wirePick('cornerDotStylePick',v=>state.cornerDotStyle=v); wirePick('ecPick',v=>state.ecLevel=v);
   const sizeInput=$('f-size'),sizeVal=$('sizeVal'); sizeInput.addEventListener('input',()=>{state.size=Number(sizeInput.value);sizeVal.textContent=state.size;render();});
 
@@ -115,8 +177,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   clearLogo.addEventListener('click',()=>{state.logo=null;logoInput.value='';clearLogo.hidden=true;render();});
 
   const frameLabelField=$('frameLabelField'),frameLabelInput=$('f-frame-label');
-  wirePick('framePick',v=>{state.frame=v;frameLabelField.hidden=v==='none';}); frameLabelInput.addEventListener('input',()=>{state.frameLabel=frameLabelInput.value;});
+  wirePick('framePick',v=>{state.frame=v;frameLabelField.hidden=v==='none';}); frameLabelInput.addEventListener('input',()=>{state.frameLabel=frameLabelInput.value;scheduleDraftSave();});
 
+  function syncTemplateActive(){
+    const same=(tpl)=>tpl &&
+      tpl.fg.toLowerCase()===state.fg.toLowerCase() &&
+      tpl.bg.toLowerCase()===state.bg.toLowerCase() &&
+      tpl.transparent===state.transparent &&
+      tpl.gradient.enabled===state.gradient.enabled &&
+      tpl.gradient.color2.toLowerCase()===state.gradient.color2.toLowerCase() &&
+      tpl.gradient.type===state.gradient.type &&
+      tpl.dotStyle===state.dotStyle &&
+      tpl.cornerStyle===state.cornerStyle &&
+      tpl.cornerDotStyle===state.cornerDotStyle &&
+      tpl.ecLevel===state.ecLevel;
+    document.querySelectorAll('.template-chip').forEach(b=>b.classList.toggle('active',same(TEMPLATES[b.dataset.template])));
+  }
   function syncControls(){
     fg.value=state.fg;fgVal.textContent=state.fg;bg.value=state.bg;bgVal.textContent=state.bg;transparentCk.checked=state.transparent;bg.disabled=state.transparent;
     gradientCk.checked=state.gradient.enabled;gradientOptions.hidden=!state.gradient.enabled;gradient2.value=state.gradient.color2;gradient2Val.textContent=state.gradient.color2;
@@ -127,6 +203,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('#ecPick button').forEach(b=>b.classList.toggle('active',b.dataset.val===state.ecLevel));
     document.querySelectorAll('#framePick button').forEach(b=>b.classList.toggle('active',b.dataset.val===state.frame));
     frameLabelField.hidden=state.frame==='none';frameLabelInput.value=state.frameLabel||'';sizeInput.value=state.size;sizeVal.textContent=state.size;clearLogo.hidden=!state.logo;
+    syncTemplateActive();
   }
 
   $('templatePick').addEventListener('click',e=>{const btn=e.target.closest('[data-template]');if(!btn)return;const tpl=TEMPLATES[btn.dataset.template];if(!tpl)return;Object.assign(state,{...tpl,gradient:{...tpl.gradient},logo:state.logo,frame:state.frame,frameLabel:state.frameLabel,size:state.size});document.querySelectorAll('.template-chip').forEach(b=>b.classList.toggle('active',b===btn));syncControls();render();});
@@ -153,6 +230,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // IndexedDB library
   await QRMO_STORE.migrate();
   const savedList=$('savedList'),search=$('librarySearch'),folderInput=$('saveFolder');
+  ['printSizeMm','printDpi','printGrid'].forEach(id=>$(id)?.addEventListener('change',scheduleDraftSave));
+  folderInput?.addEventListener('input',scheduleDraftSave);
   async function renderLibrary(){
     const q=(search.value||'').trim().toLowerCase();let items=await QRMO_STORE.all();if(q)items=items.filter(i=>`${i.label||''} ${i.folder||''} ${i.type||''}`.toLowerCase().includes(q));savedList.innerHTML='';
     if(!items.length){const li=document.createElement('li');li.className='empty';li.textContent=QRMO_I18N.t('gen.lib.empty');savedList.appendChild(li);return;}
@@ -170,6 +249,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   $('importLibrary').addEventListener('change',async()=>{const f=$('importLibrary').files[0];if(!f)return;try{await QRMO_STORE.importJson(await f.text());await renderLibrary();}catch(e){warningBox.hidden=false;warningBox.textContent=QRMO_I18N.t('gen.lib.importError');}$('importLibrary').value='';});
   document.addEventListener('qrmo:langchange',()=>{renderLibrary();updateHealth(currentOptions(),lastReadable);});
 
-  const requested=new URLSearchParams(location.search).get('type');if(requested&&FIELD_MAP[requested])switchTab(requested);
+  restoreDraft();
+  const requested=new URLSearchParams(location.search).get('type');
+  if(requested&&FIELD_MAP[requested]&&requested!==state.type){switchTab(requested);}
   syncControls();render();await renderLibrary();
 });

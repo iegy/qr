@@ -17,3 +17,9 @@ Date: 2026-08-20
 ## Environment limitation
 
 A Chromium end-to-end localhost smoke test was attempted, but this execution environment blocks browser navigation to localhost/file URLs with `ERR_BLOCKED_BY_ADMINISTRATOR`. Static validation and unit checks above completed successfully; final browser/device testing should still be done after deployment, especially camera permissions, PWA installation and PDF download behavior.
+
+## v2.0.1 regression checks
+
+- Solid preset options explicitly clear stale gradient state.
+- Generator draft state is restored from `qrmo-generator-draft-v2` after refresh.
+- Service worker cache version bumped to `qrmo-v2.0.1`.

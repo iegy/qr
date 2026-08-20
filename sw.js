@@ -1,5 +1,5 @@
 // qrmo v2 service worker — offline-first static toolkit.
-const CACHE_VERSION='qrmo-v2.0.0';
+const CACHE_VERSION='qrmo-v2.0.1';
 const PRECACHE_URLS=[
   './','index.html','generator.html','batch.html','scanner.html','about.html',
   'style.css','qr-core.js','storage.js','main.js','i18n.js','home.js','generator.js','batch.js','scanner.js',

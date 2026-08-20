@@ -1,5 +1,12 @@
 # qrmo Changelog
 
+## 2.0.1 — 2026-08-20
+
+- Fixed preset/color rendering where an old gradient could remain active after choosing a solid-color template.
+- Added automatic generator draft persistence: the current QR type, form data, colors, gradient, shapes, error correction, size, frame, print settings and folder are restored after refresh.
+- Template highlighting now reflects the actual current design instead of staying selected after manual customization.
+- Bumped the service-worker cache so deployed clients receive the corrected generator files.
+
 ## 2.0.0 — 2026-08-20
 
 - Aligned light/dark theme with the visual system used on iegy.net (warm cream, ink, sage, sand and ember palette) and switched the interface typography to Cairo + JetBrains Mono.

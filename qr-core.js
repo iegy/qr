@@ -89,17 +89,23 @@ const QRMO = (() => {
   function buildPayload(type, data){ return (payload[type] || payload.text)(data || {}); }
 
   function fillShape(opts){
+    /* qr-code-styling update() deep-merges options. Explicitly clear the
+       opposite fill mode, otherwise an old gradient can survive after the
+       user switches to a solid-color preset (or vice versa). */
     if (opts.gradient && opts.gradient.enabled){
-      return { gradient: {
-        type: opts.gradient.type === 'radial' ? 'radial' : 'linear',
-        rotation: opts.gradient.type === 'radial' ? 0 : (Number(opts.gradient.rotation) || 0),
-        colorStops: [
-          { offset: 0, color: opts.fg || '#211E1A' },
-          { offset: 1, color: opts.gradient.color2 || '#E4894B' }
-        ]
-      }};
+      return {
+        color: null,
+        gradient: {
+          type: opts.gradient.type === 'radial' ? 'radial' : 'linear',
+          rotation: opts.gradient.type === 'radial' ? 0 : (Number(opts.gradient.rotation) || 0),
+          colorStops: [
+            { offset: 0, color: opts.fg || '#211E1A' },
+            { offset: 1, color: opts.gradient.color2 || '#E4894B' }
+          ]
+        }
+      };
     }
-    return { color: opts.fg || '#211E1A' };
+    return { color: opts.fg || '#211E1A', gradient: null };
   }
 
   function qrOptionShape(opts){
